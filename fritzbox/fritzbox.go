@@ -11,11 +11,13 @@ import (
 
 
 const FB_TIME_FMT = "02.01.06 15:04:05"
+const CALL        = "CALL"
+const RING        = "RING"
+const DISCONNECT  = "DISCONNECT"
+const CONNECT     = "CONNECT"
 
 type CallmonHandler struct {
   conn      net.Conn
-  cb        func(FbEvent)
-  eventchan chan<- FbEvent
   Connected bool
   Host      string
 }
@@ -31,10 +33,10 @@ type FbEvent struct {
   Parameter []string
 }
 
-func (e FbEvent) Event() FbEvent {
-  return e
-}
 
+func (e FbEvent) Notify (recv chan FbEvent) {
+    recv <- e
+}
 
 func (e FbEvent) String () string {
   return fmt.Sprintf("Event %s: %s", e.Timestamp, e.EventName)
@@ -43,8 +45,9 @@ func (e FbEvent) String () string {
 
 
 func (c CallmonHandler) Connect(host string) CallmonHandler {
-  c.Host = host
-  conn, err := net.DialTimeout("tcp", host + ":1012", time.Duration(30)*time.Second)
+  c.Host     = host
+  timeout   := time.Duration(30) * time.Second
+  conn, err := net.DialTimeout("tcp", host + ":1012", timeout)
   if err!= nil {
     log.Fatal(err)
     c.Connected = false
