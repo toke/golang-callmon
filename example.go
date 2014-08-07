@@ -4,7 +4,7 @@ import (
     "os"
     "fmt"
     "encoding/json"
-    "github.com/toke/golang-callmon/fritzbox"
+    "github.com/toke/golang-callmon"
 )
 
 
