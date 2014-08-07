@@ -10,11 +10,13 @@ import (
 )
 
 
-const FB_TIME_FMT = "02.01.06 15:04:05"
-const CALL        = "CALL"
-const RING        = "RING"
-const DISCONNECT  = "DISCONNECT"
-const CONNECT     = "CONNECT"
+const (
+    FB_TIME_FMT = "02.01.06 15:04:05"
+    CALL        = "CALL"
+    RING        = "RING"
+    DISCONNECT  = "DISCONNECT"
+    CONNECT     = "CONNECT"
+)
 
 type CallmonHandler struct {
   conn      net.Conn
