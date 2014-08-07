@@ -97,18 +97,18 @@ func (c CallmonHandler) Parse(line string) FbEvent {
   }
 
   switch e.EventName {
-    case "CALL":
+    case CALL:
       e.Internal    = l[3]
       e.Source      = l[4]
       e.Destination = l[5]
       e.Parameter   = l[6:]
-    case "RING":
+    case RING:
       e.Source      = l[3]
       e.Destination = l[4]
       e.Parameter   = l[5:]
-    case "CONNECT":
+    case CONNECT:
       e.Destination = l[3]
-    case "DISCONNECT":
+    case DISCONNECT:
       e.Duration    = l[3]
   }
 
