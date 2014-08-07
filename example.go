@@ -9,17 +9,19 @@ import (
 
 
 func handleMessages(msgchan <-chan fritzbox.FbEvent){
-  ev := <- msgchan
+  for {
+      ev := <- msgchan
 
-  jsonm,_ := json.Marshal(&ev)
-  fmt.Printf("Some JSON: %s\n", jsonm)
+      jsonm,_ := json.Marshal(&ev)
+      fmt.Printf("Some JSON: %s\n", jsonm)
 
-  if ev.EventName == fritzbox.CALL {
-    fmt.Printf("%s Event: %s->%s\n", ev.EventName, ev.Source, ev.Destination)
-  } else if ev.EventName == fritzbox.RING {
-    fmt.Printf("%s Event: %s->%s\n", ev.EventName, ev.Source, ev.Destination)
-  } else {
-      fmt.Printf("! %s\n", ev)
+      if ev.EventName == fritzbox.CALL {
+        fmt.Printf("%s Event: %s->%s\n", ev.EventName, ev.Source, ev.Destination)
+      } else if ev.EventName == fritzbox.RING {
+        fmt.Printf("%s Event: %s->%s\n", ev.EventName, ev.Source, ev.Destination)
+      } else {
+          fmt.Printf("! %s\n", ev)
+      }
   }
 }
 
