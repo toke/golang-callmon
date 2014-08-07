@@ -3,21 +3,24 @@ package main
 import (
     "os"
     "fmt"
+    "encoding/json"
     "./fritzbox"
 )
 
 
 func handleMessages(msgchan <-chan fritzbox.FbEvent){
   ev := <- msgchan
- 
-  fmt.Printf("Event: %s\n", ev)
-  if ev.EventName == fritzbox.CALL {
-    fmt.Printf("Event: %s\n", ev.Destination)
-  } else if ev.EventName == fritzbox.RING {
-    fmt.Printf("Event: %s\n", ev.Source)
-  }
 
-  fmt.Printf("! %s\n", ev)
+  mapD,_ := json.Marshal(&ev)
+  fmt.Printf("Some JSON: %s\n", mapD)
+
+  if ev.EventName == fritzbox.CALL {
+    fmt.Printf("%s Event: %s->%s\n", ev.EventName, ev.Source, ev.Destination)
+  } else if ev.EventName == fritzbox.RING {
+    fmt.Printf("%s Event: %s->%s\n", ev.EventName, ev.Source, ev.Destination)
+  } else {
+      fmt.Printf("! %s\n", ev)
+  }
 }
 
 func mainloop(host string) {
@@ -39,7 +42,7 @@ func mainloop(host string) {
 
 func main() {
   arg := os.Args
-  fmt.Println(arg)
+
   host := "fritz.box"
   if (len(arg) > 1 && arg[1] != "") {
     host = arg[1]
