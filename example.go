@@ -11,8 +11,8 @@ import (
 func handleMessages(msgchan <-chan fritzbox.FbEvent){
   ev := <- msgchan
 
-  mapD,_ := json.Marshal(&ev)
-  fmt.Printf("Some JSON: %s\n", mapD)
+  jsonm,_ := json.Marshal(&ev)
+  fmt.Printf("Some JSON: %s\n", jsonm)
 
   if ev.EventName == fritzbox.CALL {
     fmt.Printf("%s Event: %s->%s\n", ev.EventName, ev.Source, ev.Destination)
