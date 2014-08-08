@@ -48,14 +48,23 @@ func (e FbEvent) String () string {
 
 func (c CallmonHandler) Connect(host string) CallmonHandler {
   c.Host     = host
-  timeout   := time.Duration(30) * time.Second
-  conn, err := net.DialTimeout("tcp", host + ":1012", timeout)
+  //timeout   := time.Duration(30) * time.Second
+
+  addr, err := net.ResolveTCPAddr("tcp", host + ":1012")
+  if err != nil {
+    log.Fatal(err)
+  }
+
+
+  conn, err := net.DialTCP("tcp", nil, addr)
   if err!= nil {
     log.Fatal(err)
     c.Connected = false
   } else {
     c.Connected = true
   }
+  conn.SetKeepAlivePeriod(time.Duration(30) * time.Second)
+  conn.SetKeepAlive(true)
 
   c.conn = conn
   return c
@@ -68,20 +77,19 @@ func (c CallmonHandler) Close() {
   c.Connected = false
 }
 
-
 func (c CallmonHandler) Loop(recv chan FbEvent) {
   connbuf := bufio.NewReader(c.conn)
 
   for {
     str, err := connbuf.ReadString('\n')
-    if len(str)>0 {
-      recv <- c.Parse(str) 
-    }
     if err!= nil {
+      c.conn.Close()
       log.Println(err)
       break
     }
-
+    if len(str)>0 {
+      recv <- c.Parse(str) 
+    }
   }
 }
 
