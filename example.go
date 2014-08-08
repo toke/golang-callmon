@@ -35,7 +35,7 @@ func mainloop(host string) {
     go handleMessages(recv)
  
     // Inject a test message
-    f := c.Parse("06.08.14 14:52:26;CALL;1;10;50000001;012344567;SIP1;")
+    f := c.Parse("06.08.14 14:52:26;CALL;1;10;50000001;012344567;SIP1;\r\n")
     recv <- f
 
     c.Loop(recv)
