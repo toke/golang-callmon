@@ -3,6 +3,7 @@ package main
 import (
     "os"
     "fmt"
+    "time"
     "encoding/json"
     "github.com/toke/golang-callmon/fritzbox"
 )
@@ -33,7 +34,7 @@ func mainloop(host string) {
   if c.Connected {
     recv := make(chan fritzbox.FbEvent)
     go handleMessages(recv)
- 
+
     // Inject a test message
     f := c.Parse("06.08.14 14:52:26;CALL;1;10;50000001;012344567;SIP1;\r\n")
     recv <- f
@@ -50,6 +51,10 @@ func main() {
     host = arg[1]
   }
 
-  mainloop(host)
+  for {
+    mainloop(host)
+    time.Sleep(1 * time.Second)
+    fmt.Println("reconnect…")
+  }
   fmt.Println("NEVER EVER GONNA GIVE YOU UP")
 }
