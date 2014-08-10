@@ -17,11 +17,11 @@ The example code currently does not much but shows the library is working.
 
 ## Install
 
-   git get github.com/toke/golang-callmon
+    git get github.com/toke/golang-callmon
 
 ## Run Example
 
-   go run ${GOPATH}/src/github.com/toke/golang-callmon/example.go fritz.box
+    go run ${GOPATH}/src/github.com/toke/golang-callmon/example.go fritz.box
 
 
 
