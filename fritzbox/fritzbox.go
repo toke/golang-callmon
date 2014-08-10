@@ -29,11 +29,22 @@ type FbEvent struct {
   Timestamp   time.Time
   EventName   string
   Id          string
-  Internal    string
-  Source      string
-  Destination string
-  Duration    string
+  Internal    string   // InternalCallerId
+  Source      string   // LocalCallerId
+  Destination string   // RemoteCallerId
+  Duration    string   // time.Duration
   Parameter []string
+}
+
+type Reason struct {
+  Timestamp         time.Time
+  EventName         string
+  Id                int
+  InternalCallerId  string
+  LocalCallerId     string
+  RemoteCallerId    string
+  Duration          time.Duration
+  Parameter       []string
 }
 
 
@@ -63,7 +74,7 @@ func (c CallmonHandler) Connect(host string, recv chan FbEvent) CallmonHandler {
   } else {
     c.Connected = true
   }
-  
+
   conn.SetKeepAlivePeriod(time.Duration(30) * time.Second)
   conn.SetKeepAlive(true)
 
