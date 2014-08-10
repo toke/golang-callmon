@@ -15,5 +15,15 @@ should print some output on your terminal.
 
 The example code currently does not much but shows the library is working.
 
+## Install
+
+   git get github.com/toke/golang-callmon
+
+## Run Example
+
+   go run ${GOPATH}/src/github.com/toke/golang-callmon/example.go fritz.box
+
+
+
 [callmon]: http://www.wehavemorefun.de/fritzbox/Callmonitor
 [golang]: http://golang.org/
