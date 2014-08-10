@@ -22,6 +22,7 @@ type CallmonHandler struct {
   conn      net.Conn
   Connected bool
   Host      string
+  event     chan FbEvent
 }
 
 type FbEvent struct {
@@ -46,15 +47,14 @@ func (e FbEvent) String () string {
 
 
 
-func (c CallmonHandler) Connect(host string) CallmonHandler {
+func (c CallmonHandler) Connect(host string, recv chan FbEvent) CallmonHandler {
   c.Host     = host
-  //timeout   := time.Duration(30) * time.Second
+  c.event    = recv
 
   addr, err := net.ResolveTCPAddr("tcp", host + ":1012")
   if err != nil {
     log.Fatal(err)
   }
-
 
   conn, err := net.DialTCP("tcp", nil, addr)
   if err!= nil {
@@ -63,6 +63,7 @@ func (c CallmonHandler) Connect(host string) CallmonHandler {
   } else {
     c.Connected = true
   }
+  
   conn.SetKeepAlivePeriod(time.Duration(30) * time.Second)
   conn.SetKeepAlive(true)
 
@@ -77,9 +78,13 @@ func (c CallmonHandler) Close() {
   c.Connected = false
 }
 
-func (c CallmonHandler) Loop(recv chan FbEvent) {
-  connbuf := bufio.NewReader(c.conn)
 
+func (c CallmonHandler) read_loop() {
+
+}
+
+func (c CallmonHandler) Loop() {
+  connbuf := bufio.NewReader(c.conn)
   for {
     str, err := connbuf.ReadString('\n')
     if err!= nil {
@@ -88,7 +93,7 @@ func (c CallmonHandler) Loop(recv chan FbEvent) {
       break
     }
     if len(str)>0 {
-      recv <- c.Parse(str) 
+      c.event <- c.Parse(str)
     }
   }
 }

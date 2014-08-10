@@ -27,19 +27,21 @@ func handleMessages(msgchan <-chan fritzbox.FbEvent){
 }
 
 func mainloop(host string) {
-  c := new(fritzbox.CallmonHandler).Connect(host)
+
+  recv := make(chan fritzbox.FbEvent)
+
+  c := new(fritzbox.CallmonHandler).Connect(host, recv)
 
   defer c.Close()
 
   if c.Connected {
-    recv := make(chan fritzbox.FbEvent)
     go handleMessages(recv)
 
     // Inject a test message
     f := c.Parse("06.08.14 14:52:26;CALL;1;10;50000001;012344567;SIP1;\r\n")
     recv <- f
 
-    c.Loop(recv)
+    c.Loop()
   }
 }
 

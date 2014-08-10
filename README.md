@@ -13,9 +13,7 @@ install golang and `go run example.go` alternative append the IP of your Fritzbo
 It injects one Demo CALL in the output. Calling over your Fritzbox or getting a call
 should print some output on your terminal.
 
-The example code currently does not much but shows the library is working. 
+The example code currently does not much but shows the library is working.
 
 [callmon]: http://www.wehavemorefun.de/fritzbox/Callmonitor
 [golang]: http://golang.org/
-
-
