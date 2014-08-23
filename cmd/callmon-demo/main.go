@@ -1,8 +1,9 @@
 package main
 
 import (
-	"./fritzbox/"
 	"fmt"
+
+	"github.com/toke/golang-callmon/fritzbox"
 )
 
 type Test1 struct {

@@ -3,9 +3,10 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/toke/golang-callmon/fritzbox"
 	"os"
 	"time"
+
+	"github.com/toke/golang-callmon/fritzbox"
 )
 
 func handleMessages(msgchan <-chan fritzbox.FbEvent) {
@@ -57,5 +58,4 @@ func main() {
 		time.Sleep(1 * time.Second)
 		fmt.Println("reconnect…")
 	}
-	fmt.Println("NEVER EVER GONNA GIVE YOU UP")
 }
