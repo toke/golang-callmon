@@ -18,10 +18,11 @@ The example code currently does not much but shows the library is working.
 ## Install
 
     go get github.com/toke/golang-callmon
+    go install github.com/toke/golang-callmon/cmd/callmon-example
 
 ## Run Example
 
-    go run ${GOPATH}/src/github.com/toke/golang-callmon/example.go fritz.box
+    callmon-example fritz.box
 
 
 
