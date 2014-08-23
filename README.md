@@ -17,7 +17,7 @@ The example code currently does not much but shows the library is working.
 
 ## Install
 
-    git get github.com/toke/golang-callmon
+    go get github.com/toke/golang-callmon
 
 ## Run Example
 
