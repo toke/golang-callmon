@@ -6,7 +6,7 @@ import (
 	"os"
 	"time"
 
-	"github.com/toke/golang-callmon/fritzbox"
+	"github.com/toke/golang-callmon/pkg/fritzbox"
 )
 
 func handleMessages(msgchan <-chan fritzbox.FbEvent) {
