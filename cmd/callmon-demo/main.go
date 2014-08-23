@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/toke/golang-callmon/pkg/fritzbox"
+	"github.com/toke/golang-callmon/fritzbox"
 )
 
 type Test1 struct {
