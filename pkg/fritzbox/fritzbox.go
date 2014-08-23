@@ -23,7 +23,11 @@ type CallmonHandler struct {
   Connected bool
   Host      string
   event     chan FbEvent
+  Done      chan struct{}
 }
+
+
+
 
 type FbEvent struct {
   Timestamp   time.Time
@@ -36,16 +40,6 @@ type FbEvent struct {
   Parameter []string
 }
 
-type Reason struct {
-  Timestamp         time.Time
-  EventName         string
-  Id                int
-  InternalCallerId  string
-  LocalCallerId     string
-  RemoteCallerId    string
-  Duration          time.Duration
-  Parameter       []string
-}
 
 
 func (e FbEvent) Notify (recv chan FbEvent) {
